@@ -13,4 +13,7 @@ export function Todo({todos}){
 
 } 
 //render network for backend
-// vercel for frontend
+// vercel for frontend also netify maybe a option
+
+// so backend has to be deployed as well the frontend
+//front end will fetch from the deployed backend 
