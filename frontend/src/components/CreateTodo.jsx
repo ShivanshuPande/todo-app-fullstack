@@ -4,7 +4,9 @@ export function CreateTodo(){
     //study react - query as well   
     // different hooks as well
     return <div>
-        <input style={{padding:10 , margin:10 }} type ="text" placeholder="Title"></input><br />//use onChange hook from react
+
+        
+        <input style={{padding:10 , margin:10 }} type ="text" placeholder="Title" ></input><br />//use onChange hook from react
         <input style={{padding:10 , margin:10}} type ="text" placeholder="Description"></input>
         <br />
         <br />
