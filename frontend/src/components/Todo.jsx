@@ -1,5 +1,5 @@
 import { useState } from "react";
-export function Todo({tozdos}){
+export function Todo({todos}){
     return <div>
         {todos.map(function(todo){
             return <div>
