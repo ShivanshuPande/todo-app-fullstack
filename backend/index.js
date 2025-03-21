@@ -5,7 +5,6 @@ const{schema , idSchema} = require("./types");
 const { todo } = require('./db');
 
 
-//well , its not enough , need to do more
 
 app.use(express.json());
 
