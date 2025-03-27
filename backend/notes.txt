@@ -12,3 +12,4 @@ i think this much is enough for my basic one right now
 
 i will be adding isCompleted in the future also a button so that you can delete the todos which you do not want and-
 edit them as well 
+also add debouncing and search somehow so that the user can search from all the todos
