@@ -18,5 +18,5 @@ const userSchema = new mongoose.schema({
 const Users = mongoose.model("Users" , userShema)
 
 module.exports ={
-    Todos
+    Todos , Users
 }

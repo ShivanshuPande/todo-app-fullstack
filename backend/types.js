@@ -9,3 +9,7 @@ const todoBody = z.object({
     title:z.string().max(100),
     description:z.string().max(200)
 })
+
+module.exports = {
+    signupBody , todoBody
+}
