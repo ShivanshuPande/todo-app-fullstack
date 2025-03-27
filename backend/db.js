@@ -2,13 +2,12 @@ const mongoose = require("mongoose");
 
 mongoose.connect("mongodb+srv://Shiv_2005:Shivanshu192005@cluster0.aw2rp.mongodb.net/");
 
-const todo = new mongoose.schema({
+const todoSchema = new mongoose.schema({
     todo:String ,
-    description: String ,
-    isCompleted : Boolean
+    description: String
 })
 
-const Todos = mongoose.model("Todos" , todo)
+const Todos = mongoose.model("Todos" , todoSchema)
 
 
 const userSchema = new mongoose.schema({
