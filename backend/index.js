@@ -1,11 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const { signupBody } = require("./types");
-const { Users } = require("./db");
+const { Users, Todos } = require("./db");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("./config");
+const { authMiddleware } = require("./authMiddleware");
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.post("/signUp" , async(req,res)=>{
     try{
@@ -36,7 +38,7 @@ app.post("/signUp" , async(req,res)=>{
     
 })
 
-app.post("signin" , (res ,req) => {
+app.post("/signin" ,async (req ,res) => {
     try{
         const payload =  req.body ;
         
@@ -48,14 +50,14 @@ app.post("signin" , (res ,req) => {
             })
         }
 
-        const user  =  Users.findOne({
+        const user  =  await Users.findOne({
             username:payload.username , 
             password:payload.password
         });
 
         if(!user){
             return res.status(411).json({
-                msg : "User doesnt exist , Pls signup"
+                msg : "User doesnt exist , Please signup"
             })
         }
 
@@ -69,9 +71,53 @@ app.post("signin" , (res ,req) => {
 
 
 
-    }catch{
+    }catch(err){
+        console.log(err)
         res.json({
             msg : "Error while Logging In"
         })
     }
+}) 
+
+
+app.post("/todos" , authMiddleware , async(req,res)=>{
+    try{const payload = req.body;
+
+    const newTodo = await Todos.create({
+        title : payload.title,
+        description : payload.description,
+        userId : req.userId
+    })
+
+    res.status(200).json({
+        msg : "Todo Created Successfully" ,
+        todo : newTodo
+    })
+    }catch(err){
+            console.log(err)
+            res.json({
+                msg : "somethings wrong"
+            })
+    }
 })
+
+app.get("/todos", authMiddleware,async (req , res)=>{
+    
+
+    try{const response = await Todos.findOne({
+            userId : req.userId
+        })
+        if(!response){
+            return res.json({
+                msg : "cannot find relevant todos"
+            })
+        }
+    }catch(err){
+        console.log(err)
+        res.json({
+            msg : "somethings wrong"
+        })
+    }
+})
+
+app.listen(3000,()=> console.log(`app is running on the port 3000`));
