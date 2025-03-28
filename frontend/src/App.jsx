@@ -27,7 +27,7 @@ function App() {
     fetchTodos();
     } ,[])
 
-    const addtodos = (newTodo)=>{
+    const addTodos = (newTodo)=>{
       setTodos([...todos , newTodo]);
     }
 
@@ -38,7 +38,7 @@ function App() {
     <Routes>
       <Route path='/' element={<SignUp/>}></Route>
       <Route path='/signin' element={<Signin/>}></Route>
-      <Route path='/todos' element={<Todospage todos={todos} addtodo={addtodos}/>}></Route>
+      <Route path='/todos' element={<Todospage todos={todos} addtodo={addTodos}/>}></Route>
       
     </Routes>
     </BrowserRouter>

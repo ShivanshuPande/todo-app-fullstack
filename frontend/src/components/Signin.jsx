@@ -28,11 +28,25 @@ export default function Signin() {
         }
         
     }
+
+    console.log("from the Signin file")
     return(
         <>
+        
         <input placeholder="Username" type="text" value={username} onChange={userHandler}></input>
         <input placeholder="Password" type="text" value={password} onChange={passHandler}></input>
-        <button onClick={submitHandler}>Sign In</button>
+        <button className="
+                    px-4 py-2 
+                    text-white 
+                    bg-blue-500 
+                    rounded 
+                    hover:cursor-pointer 
+                    hover:bg-blue-600 
+                    active:bg-green-500 
+                    transition-all 
+                    duration-300
+                " onClick={submitHandler}>Sign In</button>
+        
         </>
     )
 }

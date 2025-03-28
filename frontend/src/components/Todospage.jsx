@@ -2,10 +2,10 @@ import CreateTodo from "./CreateTodo";
 import Todo from "./Todo";
 
 
-export default function Todospage({todos , addtodo}){
+export default function Todospage({todos , addTodo}){
     return(
         <>
-            <CreateTodo addTodo={addtodo}/>
+            <CreateTodo addTodo={addTodo}/>
             <Todo todos={todos}/>
         </>
     )

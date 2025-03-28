@@ -22,7 +22,6 @@ import { useState } from "react"
             const value = e.target.value;
             if(value.length >  200 ){
             setdescriptionError("The description cannot be more than 200 characters")
-            }else{ q    
                 setdescriptionError(null)
                 setdescription(value)
             }
@@ -52,6 +51,16 @@ import { useState } from "react"
             {titleError ? <p>{titleError}</p> :null}
             <input placeholder="description" type="text" value={description} onChange={descriptionHandler}></input>
             {descriptionError ? <p>{descriptionError}</p>: null}
-            <button onClick={submitHandler}>Create</button>
+            <button className="
+                    px-4 py-2 
+                    text-white 
+                    bg-blue-500 
+                    rounded 
+                    hover:cursor-pointer 
+                    hover:bg-blue-600 
+                    active:bg-green-500 
+                    transition-all 
+                    duration-300
+                "  onClick={submitHandler}>Create</button>
         </>
     }   
