@@ -1,4 +1,5 @@
-    import { useState } from "react"
+import axios from "axios";
+import { useState } from "react"
 
     export default function CreateTodo(){
         
@@ -27,8 +28,17 @@
             }
         }
 
+        const payload ={
+            title:title ,
+            description : description
+        }
+
         const submitHandler= ()=>{
-            axios.post
+            axios.post("http://localhost:3000/todos" , payload , {
+                headera:{
+                    Authorization : `Bearer ${token}`      
+                }
+            })
         }
 
 
