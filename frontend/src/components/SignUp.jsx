@@ -1,4 +1,4 @@
-export function Signup(){
+export function SignUp(){
     const [username , setusername] = useState("")
     const [password , setpassword] = useState("")
     const [response , setresponse] = useState("")

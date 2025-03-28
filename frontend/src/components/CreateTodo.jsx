@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react"
 
-    export default function CreateTodo(){
+    export default function CreateTodo({addTodo}){
         
         const [title , setTitle] = useState("");
         const [description ,setdescription] = useState("");
@@ -22,7 +22,7 @@ import { useState } from "react"
             const value = e.target.value;
             if(value.length >  200 ){
             setdescriptionError("The description cannot be more than 200 characters")
-            }else{
+            }else{ q    
                 setdescriptionError(null)
                 setdescription(value)
             }
@@ -34,11 +34,16 @@ import { useState } from "react"
         }
         const token = localStorage.getItem("token")
         const submitHandler= async ()=>{
-            await axios.post("http://localhost:3000/todos" , payload , {
+            const response = await axios.post("http://localhost:3000/todos" , payload , {
                 headers:{
                     Authorization : token      
                 }
             })
+            if(response.status === 201){
+                addTodo(response.data);
+                setTitle("");
+                setdescription("");
+            }
         }
 
 
@@ -49,4 +54,4 @@ import { useState } from "react"
             {descriptionError ? <p>{descriptionError}</p>: null}
             <button onClick={submitHandler}>Create</button>
         </>
-    }
+    }   
