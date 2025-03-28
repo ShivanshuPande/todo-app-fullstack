@@ -21,7 +21,12 @@ export default function Signin() {
     }
 
     const submitHandler = async()=>{
-        await axios.post("http://localhost:3000/signin" ,payload)
+        const response =await axios.post("http://localhost:3000/signin" ,payload);
+        if(response.status === 200){
+            const token = response.data.token 
+            localStorage.setItem("token" , `Bearer ${token}`)   
+        }
+        
     }
     return(
         <>
