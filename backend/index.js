@@ -65,9 +65,9 @@ app.post("/signin" ,async (req ,res) => {
             userId: user._id
         }, JWT_SECRET)
         
-        res.status(200).json({
-            token : token
-        })
+            res.status(200).json({
+                token : token
+            })
 
 
 
