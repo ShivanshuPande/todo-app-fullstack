@@ -12,7 +12,7 @@ app.use(cors());
 app.post("/signUp" , async(req,res)=>{
     try{
         const payload = req.body;
-
+                q   
         const response = signupBody.safeParse(payload);
         
         if(!response.success){
