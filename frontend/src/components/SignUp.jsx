@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function SignUp(){
-    const [username , setusername] = useState("")
-    const [password , setpassword] = useState("")
-    const [response , setresponse] = useState("")
+    const [username , setusername] = useState("");
+    const [password , setpassword] = useState("");
+    
+    const navigate = useNavigate();
     
         const userHandler = (e)=>{
             const value = e.target.value;
@@ -22,7 +24,10 @@ export default function SignUp(){
 
         const createHandler = async ()=>{
             const value = await axios.post("http://localhost:3000/signUp" ,payload);
-            setresponse(value)
+            if(value.status === 200){
+                console.log(value.data.msg);
+                navigate("/signin")
+            }
             
         }
 
@@ -41,7 +46,7 @@ export default function SignUp(){
                     transition-all 
                     duration-300
                 " onClick={createHandler}>Create</button>
-            {response}
+
             </>
         )
 }
