@@ -111,6 +111,9 @@ app.get("/todos", authMiddleware,async (req , res)=>{
                 msg : "cannot find relevant todos"
             })
         }
+        return res.json({
+            msg : "is there someone else"
+        })
     }catch(err){
         console.log(err)
         res.json({
