@@ -46,6 +46,12 @@ export default function SignUp(){
                     transition-all 
                     duration-300
                 " onClick={createHandler}>Create</button>
+            <p>Already a User?{""}
+            <span className="text-blue-500 hover:cursor-pointer" onClick={()=>{
+                navigate("/signin")
+            }}>
+                Sign In
+            </span></p>
 
             </>
         )

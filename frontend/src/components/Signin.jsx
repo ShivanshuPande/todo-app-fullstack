@@ -1,10 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Signin() { 
     const [username , setusername] = useState("")
     const [password , setpassword] = useState("")
-
+    const [response , setresponse] = useState(true)
+    const navigate = useNavigate();
     const userHandler = (e)=>{
         const value = e.target.value;
         setusername(value)
@@ -39,8 +41,10 @@ export default function Signin() {
                 const token = data.token;
                 localStorage.setItem("token", `Bearer ${token}`);
                 console.log("Token:", token);
+                navigate("/todos")
             } else if (response.status === 411) {
                 console.error("Invalid inputs. Please check username and password.");
+                setresponse(false)
             } else {
                 console.error("Unexpected error occurred.");
             }
@@ -66,7 +70,8 @@ export default function Signin() {
                     transition-all 
                     duration-300
                 " onClick={submitHandler}>Sign In</button>
-        
+        {response ? null : <p>User does not exist</p>}
         </>
+        
     )
 }
