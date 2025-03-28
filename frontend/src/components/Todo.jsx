@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 export function Todo({todos}){
     return <div>
         {todos.map(function(todo){

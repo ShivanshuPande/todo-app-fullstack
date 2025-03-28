@@ -32,7 +32,7 @@ export default function Signin() {
         <>
         <input placeholder="Username" type="text" value={username} onChange={userHandler}></input>
         <input placeholder="Password" type="text" value={password} onChange={passHandler}></input>
-        <button onClick={submitHandler}></button>
+        <button onClick={submitHandler}>Sign In</button>
         </>
     )
 }

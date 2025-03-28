@@ -10,7 +10,7 @@ import { useState } from "react"
 
         const titleHandler = (e)=>{ 
             const value = e.target.value;
-            if(value.length === 50 ){
+            if(value.length > 50 ){
                 settitleError("The title cannot be more than 50 characters")
             }else{
                 settitleError(null)
@@ -20,7 +20,7 @@ import { useState } from "react"
 
         const descriptionHandler = (e)=>{ 
             const value = e.target.value;
-            if(value.length ===  200 ){
+            if(value.length >  200 ){
             setdescriptionError("The description cannot be more than 200 characters")
             }else{
                 setdescriptionError(null)
@@ -32,11 +32,11 @@ import { useState } from "react"
             title:title ,
             description : description
         }
-
-        const submitHandler= ()=>{
-            axios.post("http://localhost:3000/todos" , payload , {
-                headera:{
-                    Authorization : `Bearer ${token}`      
+        const token = localStorage.getItem("token")
+        const submitHandler= async ()=>{
+            await axios.post("http://localhost:3000/todos" , payload , {
+                headers:{
+                    Authorization : token      
                 }
             })
         }
@@ -46,7 +46,7 @@ import { useState } from "react"
             <input placeholder="Title"  type="text" value={title} onChange={titleHandler}></input>
             {titleError ? <p>{titleError}</p> :null}
             <input placeholder="description" type="text" value={description} onChange={descriptionHandler}></input>
-            {descriptionError ? {descriptionError} : null}
-            <button onClick={submitHandler}></button>
+            {descriptionError ? <p>{descriptionError}</p>: null}
+            <button onClick={submitHandler}>Create</button>
         </>
     }
