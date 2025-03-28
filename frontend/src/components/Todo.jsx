@@ -4,15 +4,10 @@ export default function Todo({todos}){
         {todos.map(function(todo){
             return <div>
                 <h1>{todo.title}</h1>
-                <h2>{todo.description}</h2>
+                <h2>{todo.description}</h2>c
             </div>
 
         })}
     </div>
 
 } 
-//render network for backend
-// vercel for frontend also netify maybe a option
-
-// so backend has to be deployed as well the frontend
-//front end will fetch from the deployed backend 

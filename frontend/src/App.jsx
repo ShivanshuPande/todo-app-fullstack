@@ -15,7 +15,7 @@ function App() {
         const token = localStorage.getItem("token")
         try{const response = await axios.get("http://localhost:3000/todos" ,{
           headers : {
-            authorization : token
+            "Authorization" : token
           }
         })
         setTodos(response.data)
