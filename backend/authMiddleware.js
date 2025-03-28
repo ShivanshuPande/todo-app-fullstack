@@ -1,31 +1,42 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("./config");
 
+const authMiddleware = (req, res, next) => {
+    try {
+        const authHeader = req.headers.authorization;
 
-const authMiddleware = (req , res , next) =>{
-    try{const authHeader =  req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(403).json({
+                msg: "No token provided",
+                details: "Authorization header is missing or invalid"
+            });
+        }
 
-    if(!authHeader|| !authHeader.startsWith('Bearer ')){
-        return res.status(403).json({
-            msg : "not a bearer or empty Token"
-        })
-    }
+        const token = authHeader.split(' ')[1];
 
-    const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, JWT_SECRET);
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+        
 
-    if(decoded.userId){
+        
+        if (!decoded || !decoded.userId) {
+            return res.status(401).json({
+                msg: "Invalid token",
+                details: "Token does not contain a valid user ID"
+            });
+        }
+
+        
         req.userId = decoded.userId;
         next();
-    }
-    res.json({
-        msg : "Invalid token"
-    })}catch(err){
-        return res.json({
-            msg : "Something went wrong"
-        })
+
+    } catch (err) {
+
+        return res.status(500).json({
+            msg: "Authentication error",
+            details: err.message
+        });
     }
 }
 
-module.exports = {authMiddleware}
+module.exports = { authMiddleware }

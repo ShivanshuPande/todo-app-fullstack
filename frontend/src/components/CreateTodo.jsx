@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react"
 
-export default function CreateTodo({addTodo}){
+export default function CreateTodo({addTodos}){
         
         const [title , setTitle] = useState("");
         const [description ,setdescription] = useState("");
@@ -41,7 +41,7 @@ export default function CreateTodo({addTodo}){
                 }
             })
             
-            addTodo(response.data);
+            addTodos(response.data);
             setTitle("");
             setdescription("");
             

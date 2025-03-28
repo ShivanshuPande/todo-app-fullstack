@@ -31,6 +31,9 @@ app.post("/signUp" , async(req,res)=>{
             password : payload.password
         })
         res.status(200).json({msg : "User created sucessfully , Welcome to the platform"});
+
+
+        console.log("user is created")
     }catch{
         res.status(500).json({msg : "Some Error occured dont worry its not your fault"})
     }
@@ -64,9 +67,9 @@ app.post("/signin" ,async (req ,res) => {
             userId: user._id
         }, JWT_SECRET)
         
-            res.status(200).json({
-                token : token
-            })
+        return res.status(200).json({
+            token : token
+        })
 
 
 
@@ -78,48 +81,91 @@ app.post("/signin" ,async (req ,res) => {
     }
 }) 
 
-
-app.post("/todos" , authMiddleware , async(req,res)=>{
-    try{const payload = req.body;
-
-    const newTodo = await Todos.create({
-        title : payload.title,
-        description : payload.description,
-        userId : req.userId
-    })
-
-    return res.status(200).json({
-        msg : "Todo Created Successfully" ,
-        todo : newTodo
-    })
-    }catch(err){
-            console.log(err)
-            res.json({
-                msg : "somethings wrong"
-            })
+app.get("/todos", authMiddleware, async (req, res) => {
+    try {
+        const todos = await Todos.find({
+            userId: req.userId
+        });
+        
+        
+        return res.status(200).json({
+            todos: todos.length > 0 ? todos : []
+        });
+        
+    } catch (err) {
+        console.error(err); 
+        return res.status(500).json({
+            msg: "Something went wrong while fetching todos",
+            error: err.message
+        });
     }
-})
+});
 
-app.get("/todos", authMiddleware,async (req , res)=>{
+
+// app.post("/todos" , authMiddleware , async(req,res)=>{
+//     try{const payload = req.body;
+
+//     const newTodo = await Todos.create({
+//         title : payload.title,
+//         description : payload.description,
+//         userId : req.userId
+//     })
+
+//     return res.status(201).json({
+//         msg : "Todo Created Successfully" ,
+//         todo : newTodo
+//     })
+//     }catch(err){
+//         console.log(err)
+//         return res.json({
+//             msg : "somethings wrong"
+//         })
+//     }
+// })
+
+// app.get("/todos", authMiddleware,async (req , res)=>{
     
 
-    try{const todos = await Todos.find({
-            userId : req.userId
-        })
+//     try{const todos = await Todos.find({
+//             userId : req.userId
+//         })
         
-        if(todos.length === 0){
-            return res.json({
-                msg : "No todos found for this user"
-            });
-        }
-        return res.json(todos);
+//         if(todos.length === 0){
+//             console.log("no todos found")
+//             return res.json({
+//                 msg : "No todos found for this user"
+//             });
+//         }
+//         return res.json(todos);
         
-    }catch(err){
-        console.log(err)
-        res.json({
-            msg : "somethings wrong"
-        })
+//     }catch(err){
+//         console.log(err)
+//         return res.json({
+//             msg : "somethings wrong"
+//         })
+//     }
+// })
+app.post("/todos", authMiddleware, async (req, res) => {
+    try {
+        const payload = req.body;
+
+        const newTodo = await Todos.create({
+            title: payload.title,
+            description: payload.description,
+            userId: req.userId
+        });
+
+        return res.status(201).json({
+            msg: "Todo Created Successfully",
+            todo: newTodo
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            msg: "Something went wrong while creating todo",
+            error: err.message
+        });
     }
-})
+});
 
 app.listen(3000,()=> console.log(`app is running on the port 3000`));

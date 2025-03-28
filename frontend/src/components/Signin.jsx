@@ -15,19 +15,39 @@ export default function Signin() {
         setpassword(value)
     }
 
-    const payload = {
-        username,
-        password
-    }
 
-    const submitHandler = async()=>{
-        const response =await axios.post("http://localhost:3000/signin" ,payload);
-        if(response.status === 200){
-            const token = response.data.token 
-            localStorage.setItem("token" , `Bearer ${token}`)   
+
+    const submitHandler = async () => {
+        console.log("data is posted");
+    
+        const payload = {
+            username,
+            password
+        };
+    
+        try {
+            const response = await fetch("http://localhost:3000/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+    
+            if (response.status === 200) {
+                const data = await response.json();
+                const token = data.token;
+                localStorage.setItem("token", `Bearer ${token}`);
+                console.log("Token:", token);
+            } else if (response.status === 411) {
+                console.error("Invalid inputs. Please check username and password.");
+            } else {
+                console.error("Unexpected error occurred.");
+            }
+        } catch (err) {
+            console.error("Error occurred:", err.message);
         }
-        
-    }
+    };
 
     console.log("from the Signin file")
     return(
