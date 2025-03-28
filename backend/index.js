@@ -88,7 +88,7 @@ app.post("/todos" , authMiddleware , async(req,res)=>{
         userId : req.userId
     })
 
-    res.status(200).json({
+    return res.status(200).json({
         msg : "Todo Created Successfully" ,
         todo : newTodo
     })
@@ -103,17 +103,17 @@ app.post("/todos" , authMiddleware , async(req,res)=>{
 app.get("/todos", authMiddleware,async (req , res)=>{
     
 
-    try{const response = await Todos.findOne({
+    try{const todos = await Todos.find({
             userId : req.userId
         })
-        if(!response){
+        
+        if(todos.length === 0){
             return res.json({
-                msg : "cannot find relevant todos"
-            })
+                msg : "No todos found for this user"
+            });
         }
-        return res.json({
-            msg : "is there someone else"
-        })
+        return res.json(todos);
+        
     }catch(err){
         console.log(err)
         res.json({
